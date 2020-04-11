@@ -6,31 +6,25 @@ int main() {
     cin >> T;
     while(T--) {
         string s1, s2;
-        map<char,int>mp1, mp2;
-        mp1.clear(); mp2.clear();
         cin >> s1 >> s2;
-        for(int i=0; i<s1.length(); i++)
-            mp1[s1[i]]++;
-            
-        for(int i=0; i<s2.length(); i++)
-            mp2[s2[i]]++;
-        
         int flag = 0;
+        int cnt1[256];
+        int cnt2[256];
+        memset(cnt1, 0, sizeof cnt1);
+        memset(cnt2, 0, sizeof cnt2);
+            
+        for(int i = 0; i < s1.length(); i++)
+            cnt1[s1[i] - '0']++;
         
-        for(auto it : mp1) {
-            if(it.second!=mp2[it.first]) {
-                flag = -1; // Could not find this character in the other map
-                break;
+        for(int i = 0; i <s2.length(); i++)
+            cnt2[s2[i] - '0']++;
+
+        for(int i=0; i<256; i++)
+            if(cnt1[i] != cnt2[i]) {
+                    flag = -1;
+                    break;
             }
-        }
-        
-        for(auto it : mp2) {
-            if(it.second!=mp1[it.first]) {
-                flag = -1; 
-                break;
-            }
-        }
         (flag==-1)?printf("NO\n"):printf("YES\n");
     }
-	return 0;
+    return 0;
 }
